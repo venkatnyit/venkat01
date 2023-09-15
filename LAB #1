@@ -1,0 +1,758 @@
+
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": []
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "code",
+      "source": [
+        "import requests\n",
+        "from bs4 import BeautifulSoup\n",
+        "\n",
+        "# Define the URL of the faculty directory or departmental page\n",
+        "url = \"https://www.cs.umd.edu/people/faculty\"  # Replace with the actual URL\n"
+      ],
+      "metadata": {
+        "id": "QhzSBD7Vj5XN"
+      },
+      "execution_count": 1,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Sending an HTTP GET request\n",
+        "response = requests.get(url)\n",
+        "response"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "dfiKskcNj6Sl",
+        "outputId": "cfbfa045-bcc0-4003-8e73-0de27e949126"
+      },
+      "execution_count": 2,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "<Response [200]>"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 2
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "soup = BeautifulSoup(response.text, 'html.parser')"
+      ],
+      "metadata": {
+        "id": "XywPFalpj-Sz"
+      },
+      "execution_count": 3,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "professor_elements = soup.select('.media-heading')"
+      ],
+      "metadata": {
+        "id": "RxwVjsvcklQk"
+      },
+      "execution_count": 4,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "professor_elements"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "bipe95Wfk4Ml",
+        "outputId": "5d8c9799-436f-4fe2-f76c-a1c84fd8fb43"
+      },
+      "execution_count": 5,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "[<h4 class=\"media-heading\"><a href=\"/people/abadi\">Daniel Abadi  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/agrawala\">Ashok Agrawala  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/fardina\">Fardina Alam  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/jyaloimo\">John Aloimonos  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/bahar\">Bahar Asgari  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/cyb\">Clifford Bakalian  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/bhatele\">Abhinav Bhatele  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/bobby\">Bobby Bhattacharjee  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/ying\">Jordan Boyd-Graber  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/jmct\">Jose Calderon  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/marine\">Marine Carpuat  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/yzchen\">Yizheng Chen  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/amchilds\">Andrew Childs  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/wcleavel\">Rance Cleaveland  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/hal3\">Hal Daumé III  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/adeshpan\">Amol Deshpande  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/laxman\">Laxman Dhulipala  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/dickerson\">John Dickerson  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/rduraisw\">Ramani Duraiswami  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/reastman\">Roger Eastman  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/helman\">Howard Elman  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/fpe\">Fawzi Emad  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/sfeizi\">Soheil Feizi  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/hfrances\">Hervé Franceschi  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/gasarch\">William Gasarch  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/tomg\">Tom Goldstein  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/egolub\">Evan Golub  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/egonzal5\">Elias Gonzalez  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/dgottesm\">Daniel Gottesman  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/hajiagha\">Mohammad Hajiaghayi  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/larry\">Larry Herman  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/hollings\">Jeffrey K. Hollingsworth  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/heng\">Heng Huang  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/furongh\">Furong Huang  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/jbhuang\">Jia-Bin Huang  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/dwj\">David Jacobs  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/jkatz2\">Jonathan Katz  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/profk\">Christopher Kauffman  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/keleher\">Pete Keleher  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/pkline1\">Paul Kline  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/ckruskal\">Clyde Kruskal  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/leonidas\">Leonidas Lampropoulos  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/levindm\">Dave Levin  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/lin\">Ming Lin  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/leozcliu\">Zhicheng Liu  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/zaoxing\">Zaoxing Liu  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/dmanocha\">Dinesh Manocha  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/mmarsh\">Michael Marsh  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/mmazurek\">Michelle Mazurek  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/metzler\">Christopher Metzler  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/imiers\">Ian Miers  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/stevensm\">Stevens Miller  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/ekmolloy\">Erin Molloy  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/morawski\">Maksym Morawski  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/mount\">David Mount  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/nau\">Dana Nau  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/myniu\">Murphy Yuezhen Niu  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/nelson\">Nelson Padua-Perez  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/paredes\">Pablo Paredes  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/nomad\">Rob Patro  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/huaishu\">Huaishu Peng  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/mpop\">Mihai Pop  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/aporter\">Adam Porter  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/purtilo\">James Purtilo  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/regli\">William Regli  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/nirupam\">Nirupam Roy  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/rudinger\">Rachel Rudinger  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/pedram\">Pedram Sadeghian  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/hjs\">Hanan Samet  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/abhinav\">Abhinav Shrivastava  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/asriniv1\">Aravind Srinivasan  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/asussman\">Alan Sussman  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/nayeem\">Mohammad Nayeem Teli  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/tokekar\">Pratap Tokekar  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/dvanhorn\">David Van Horn  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/varshney\">Amitabh Varshney  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/xiaodiwu\">Xiaodi Wu  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/immortal\">Justin Wyss-Gallifent  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/iyoon\">Ilchul Yoon  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/tianyi\">Tianyi Zhou  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/zwicker\">Matthias Zwicker  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/warbaugh\">William Arbaugh  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/basivic\">Victor Basili  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/bederson\">Ben Bederson  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/lsdavis\">Larry Davis  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/bdorr\">Bonnie Dorr  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/mhicks2\">Michael Hicks  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/kanal\">Laveen Kanal  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/samirk\">Samir Khuller  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/oleary\">Dianne O'Leary  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/perlis\">Don Perlis  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/pugh\">William Pugh  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/reggia\">James Reggia  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/nickr\">Nicholas Roussopoulos  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/shankar\">A. Udaya Shankar  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/bshneide\">Ben Shneiderman  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/stewart\">G.W. (Pete) Stewart  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/mvz\">Marvin Zelkowitz  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/jplane\">Jandelyn Plane  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/leilani\">Leilani Battle  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/bera\">Aniket Bera  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/carlosc\">Carlos Castillo  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/hcorrada\">Hector Corrada Bravo  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/mcoudron\">Matthew Coudron  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/maxehr\">Max Ehrlich  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/elm\">Niklas Elmqvist  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/jfoster4\">Jeffrey Foster  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/lgetoor\">Lise Getoor  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/sgilkeso\">J. Scott Gilkeson  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/grantj\">John Grant  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/mgullans\">Michael Gullans  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/dharris7\">David Harris  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/mdml\">Max Leiserson  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/sdr\">Marc Lichtman  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/yikailiu\">Yi-Kai Liu  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/jmanly\">Jennifer Manly  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/camiller\">Carl Miller  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/crytting\">C. Anton Rytting  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/sahinalp\">S. Cenk Sahinalp  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/runting\">Elaine  Shi  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/gvanhoy\">Garrett Vanhoy  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/galagic\">Gorjan Alagic  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/baras\">John Baras  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/abarg\">Alexander Barg  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/amritbd\">Amrit Singh Bedi  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/mariakc\">Maria Cameron  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/joelchan\">Joel Chan  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/choe\">Eun Kyoung Choe  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/mcukier\">Michel Cukier  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/mcummin1\">Michael Cummings  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/danadach\">Dana Dachman-Soled  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/deflo\">Leila De Floriani  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/tudor\">Tudor Dumitras  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/serete\">Sheena Erete  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/nhf\">Naomi Feldman  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/vfrias\">Vanessa Frias-Martinez  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/jgolbeck\">Jennifer Golbeck  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/nhassan\">Naeemul Hassan  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/horty\">John Horty  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/hernisa\">Hernisa Kacorri  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/lazar\">Amanda Lazar  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/marciano\">Richard Marciano  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/marzullo\">Keith Marzullo  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/oard\">Doug Oard  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/otte\">Michael Otte  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/lraschid\">Louiqa Raschid  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/resnik\">Philip Resnik  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/vishkin\">Uzi Vishkin  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/weintrop\">David Weintrop  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/hzyang\">Haizhao Yang  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/yeung\">Donald Yeung  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/kaiqing\">Kaiqing Zhang  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/arblock\">Alexander Block  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/mcai1\">Mara Cai  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/jgeiping\">Jonas Geiping  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/liyili2\">Liyi Li  </a></h4>,\n",
+              " <h4 class=\"media-heading\"><a href=\"/people/anisaha1\">Aniruddha Saha  </a></h4>]"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 5
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "prof_names = [x.get_text().rstrip() for x in professor_elements]"
+      ],
+      "metadata": {
+        "id": "zM8_j-PvqTjV"
+      },
+      "execution_count": 6,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "prof_names"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "feZOcf5jqgpG",
+        "outputId": "59d59cc3-7318-4994-d3ce-0d8760a0eeba"
+      },
+      "execution_count": 7,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "['Daniel Abadi',\n",
+              " 'Ashok Agrawala',\n",
+              " 'Fardina Alam',\n",
+              " 'John Aloimonos',\n",
+              " 'Bahar Asgari',\n",
+              " 'Clifford Bakalian',\n",
+              " 'Abhinav Bhatele',\n",
+              " 'Bobby Bhattacharjee',\n",
+              " 'Jordan Boyd-Graber',\n",
+              " 'Jose Calderon',\n",
+              " 'Marine Carpuat',\n",
+              " 'Yizheng Chen',\n",
+              " 'Andrew Childs',\n",
+              " 'Rance Cleaveland',\n",
+              " 'Hal Daumé III',\n",
+              " 'Amol Deshpande',\n",
+              " 'Laxman Dhulipala',\n",
+              " 'John Dickerson',\n",
+              " 'Ramani Duraiswami',\n",
+              " 'Roger Eastman',\n",
+              " 'Howard Elman',\n",
+              " 'Fawzi Emad',\n",
+              " 'Soheil Feizi',\n",
+              " 'Hervé Franceschi',\n",
+              " 'William Gasarch',\n",
+              " 'Tom Goldstein',\n",
+              " 'Evan Golub',\n",
+              " 'Elias Gonzalez',\n",
+              " 'Daniel Gottesman',\n",
+              " 'Mohammad Hajiaghayi',\n",
+              " 'Larry Herman',\n",
+              " 'Jeffrey K. Hollingsworth',\n",
+              " 'Heng Huang',\n",
+              " 'Furong Huang',\n",
+              " 'Jia-Bin Huang',\n",
+              " 'David Jacobs',\n",
+              " 'Jonathan Katz',\n",
+              " 'Christopher Kauffman',\n",
+              " 'Pete Keleher',\n",
+              " 'Paul Kline',\n",
+              " 'Clyde Kruskal',\n",
+              " 'Leonidas Lampropoulos',\n",
+              " 'Dave Levin',\n",
+              " 'Ming Lin',\n",
+              " 'Zhicheng Liu',\n",
+              " 'Zaoxing Liu',\n",
+              " 'Dinesh Manocha',\n",
+              " 'Michael Marsh',\n",
+              " 'Michelle Mazurek',\n",
+              " 'Christopher Metzler',\n",
+              " 'Ian Miers',\n",
+              " 'Stevens Miller',\n",
+              " 'Erin Molloy',\n",
+              " 'Maksym Morawski',\n",
+              " 'David Mount',\n",
+              " 'Dana Nau',\n",
+              " 'Murphy Yuezhen Niu',\n",
+              " 'Nelson Padua-Perez',\n",
+              " 'Pablo Paredes',\n",
+              " 'Rob Patro',\n",
+              " 'Huaishu Peng',\n",
+              " 'Mihai Pop',\n",
+              " 'Adam Porter',\n",
+              " 'James Purtilo',\n",
+              " 'William Regli',\n",
+              " 'Nirupam Roy',\n",
+              " 'Rachel Rudinger',\n",
+              " 'Pedram Sadeghian',\n",
+              " 'Hanan Samet',\n",
+              " 'Abhinav Shrivastava',\n",
+              " 'Aravind Srinivasan',\n",
+              " 'Alan Sussman',\n",
+              " 'Mohammad Nayeem Teli',\n",
+              " 'Pratap Tokekar',\n",
+              " 'David Van Horn',\n",
+              " 'Amitabh Varshney',\n",
+              " 'Xiaodi Wu',\n",
+              " 'Justin Wyss-Gallifent',\n",
+              " 'Ilchul Yoon',\n",
+              " 'Tianyi Zhou',\n",
+              " 'Matthias Zwicker',\n",
+              " 'William Arbaugh',\n",
+              " 'Victor Basili',\n",
+              " 'Ben Bederson',\n",
+              " 'Larry Davis',\n",
+              " 'Bonnie Dorr',\n",
+              " 'Michael Hicks',\n",
+              " 'Laveen Kanal',\n",
+              " 'Samir Khuller',\n",
+              " \"Dianne O'Leary\",\n",
+              " 'Don Perlis',\n",
+              " 'William Pugh',\n",
+              " 'James Reggia',\n",
+              " 'Nicholas Roussopoulos',\n",
+              " 'A. Udaya Shankar',\n",
+              " 'Ben Shneiderman',\n",
+              " 'G.W. (Pete) Stewart',\n",
+              " 'Marvin Zelkowitz',\n",
+              " 'Jandelyn Plane',\n",
+              " 'Leilani Battle',\n",
+              " 'Aniket Bera',\n",
+              " 'Carlos Castillo',\n",
+              " 'Hector Corrada Bravo',\n",
+              " 'Matthew Coudron',\n",
+              " 'Max Ehrlich',\n",
+              " 'Niklas Elmqvist',\n",
+              " 'Jeffrey Foster',\n",
+              " 'Lise Getoor',\n",
+              " 'J. Scott Gilkeson',\n",
+              " 'John Grant',\n",
+              " 'Michael Gullans',\n",
+              " 'David Harris',\n",
+              " 'Max Leiserson',\n",
+              " 'Marc Lichtman',\n",
+              " 'Yi-Kai Liu',\n",
+              " 'Jennifer Manly',\n",
+              " 'Carl Miller',\n",
+              " 'C. Anton Rytting',\n",
+              " 'S. Cenk Sahinalp',\n",
+              " 'Elaine  Shi',\n",
+              " 'Garrett Vanhoy',\n",
+              " 'Gorjan Alagic',\n",
+              " 'John Baras',\n",
+              " 'Alexander Barg',\n",
+              " 'Amrit Singh Bedi',\n",
+              " 'Maria Cameron',\n",
+              " 'Joel Chan',\n",
+              " 'Eun Kyoung Choe',\n",
+              " 'Michel Cukier',\n",
+              " 'Michael Cummings',\n",
+              " 'Dana Dachman-Soled',\n",
+              " 'Leila De Floriani',\n",
+              " 'Tudor Dumitras',\n",
+              " 'Sheena Erete',\n",
+              " 'Naomi Feldman',\n",
+              " 'Vanessa Frias-Martinez',\n",
+              " 'Jennifer Golbeck',\n",
+              " 'Naeemul Hassan',\n",
+              " 'John Horty',\n",
+              " 'Hernisa Kacorri',\n",
+              " 'Amanda Lazar',\n",
+              " 'Richard Marciano',\n",
+              " 'Keith Marzullo',\n",
+              " 'Doug Oard',\n",
+              " 'Michael Otte',\n",
+              " 'Louiqa Raschid',\n",
+              " 'Philip Resnik',\n",
+              " 'Uzi Vishkin',\n",
+              " 'David Weintrop',\n",
+              " 'Haizhao Yang',\n",
+              " 'Donald Yeung',\n",
+              " 'Kaiqing Zhang',\n",
+              " 'Alexander Block',\n",
+              " 'Mara Cai',\n",
+              " 'Jonas Geiping',\n",
+              " 'Liyi Li',\n",
+              " 'Aniruddha Saha']"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 7
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "print(str(professor_elements[0]))"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "GyZJnSYGlnKb",
+        "outputId": "730d6dc0-f6dd-4b98-db79-29eae04ff012"
+      },
+      "execution_count": 8,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "<h4 class=\"media-heading\"><a href=\"/people/abadi\">Daniel Abadi  </a></h4>\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "trial_soup = BeautifulSoup(str(professor_elements[0]), 'html.parser')"
+      ],
+      "metadata": {
+        "id": "c-pcw801rk1x"
+      },
+      "execution_count": 9,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "print(trial_soup.find('h4').find('a')['href'])"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "3ilvyVBCrky-",
+        "outputId": "47afb9d4-b10b-4ca7-c186-e02d34557f08"
+      },
+      "execution_count": 10,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "/people/abadi\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "prof_urls = []\n",
+        "\n",
+        "for url in professor_elements:\n",
+        "  x_soup = BeautifulSoup(str(url), 'html.parser')\n",
+        "  complete_url = \"https://www.cs.umd.edu\"+x_soup.find('h4').find('a')['href']\n",
+        "  prof_urls.append(complete_url)"
+      ],
+      "metadata": {
+        "id": "KouqutKbsMM2"
+      },
+      "execution_count": 11,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "prof_urls[0]"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 35
+        },
+        "id": "FSD_ztT0sMIh",
+        "outputId": "8397df69-dbae-4925-a022-281d0c3d4561"
+      },
+      "execution_count": 12,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "'https://www.cs.umd.edu/people/abadi'"
+            ],
+            "application/vnd.google.colaboratory.intrinsic+json": {
+              "type": "string"
+            }
+          },
+          "metadata": {},
+          "execution_count": 12
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "\n",
+        "prof_profiles = soup.select('.media-body')"
+      ],
+      "metadata": {
+        "id": "ZwkbnIqEwTSJ"
+      },
+      "execution_count": 13,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "##########FINAL-CODE############\n",
+        "names_and_research = []\n",
+        "prof_urls = []\n",
+        "for profile in prof_profiles:\n",
+        "  profile_soup = BeautifulSoup(str(profile), 'html.parser')\n",
+        "  a_tags = profile_soup.find_all('a')\n",
+        "  prof_webpage = \"https://www.cs.umd.edu\"+profile_soup.find('h4').find('a')['href']\n",
+        "\n",
+        "  prof_urls.append(prof_webpage)\n",
+        "  names_and_research.append([ x.get_text() for x in a_tags])\n"
+      ],
+      "metadata": {
+        "id": "BFjHUGdCXd2y"
+      },
+      "execution_count": 14,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#Names\n",
+        "with open('professor_names.txt', 'w', encoding='utf-8') as file:\n",
+        "  for element in names_and_research:\n",
+        "    name = element[0].rstrip()\n",
+        "    file.write(f\"Name: {name}\\n\")\n",
+        "\n",
+        "  print(\"Names written to file.\")\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "f1zHqt4wgOkd",
+        "outputId": "ad3250a2-22a1-4e2d-b147-42f5d4f7f8a9"
+      },
+      "execution_count": 15,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Names written to file.\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#Research Areas\n",
+        "with open('professor_research_areas.txt', 'w', encoding='utf-8') as file:\n",
+        "  for element in names_and_research:\n",
+        "    elements_to_print = element[1:]\n",
+        "    result_string = \",\".join(elements_to_print)\n",
+        "\n",
+        "    file.write(f\"Prof {element[0].rstrip()} Research Areas: {result_string}\\n\")\n",
+        "  print(\"Bios written to file.\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "JUaunZMZgvGl",
+        "outputId": "ce8adbff-37ce-4cce-9ffc-f531204a53ad"
+      },
+      "execution_count": 16,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Bios written to file.\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#URLs\n",
+        "with open('professor_urls.txt', 'w', encoding='utf-8') as file:\n",
+        "  for url in prof_urls:\n",
+        "    file.write(f\"{url}\\n\")\n",
+        "print(\"URLs written.\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "qbBYWVDviYpK",
+        "outputId": "9e47142f-c1b7-4f67-9068-bb95b2a08b82"
+      },
+      "execution_count": 17,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "URLs written.\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "######FINAL-CODE########\n",
+        "final_bio = []\n",
+        "for prof_url in prof_urls:\n",
+        "  bio = \"\"\n",
+        "  response = requests.get(prof_url)\n",
+        "  bio_soup = BeautifulSoup(response.text, 'html.parser')\n",
+        "  result = bio_soup.find_all(\"div\", {\"class\":\"views-field views-field-field-biography col-md-12 col-sm-12 col-xs-12\"})\n",
+        "\n",
+        "  if len(result)==0:\n",
+        "    bio = \"No biography available on the website. NAD.\"\n",
+        "    final_bio.append(bio)\n",
+        "  else:\n",
+        "    texts = [r.text.strip() for r in result]\n",
+        "    final_bio.append(texts[0])\n"
+      ],
+      "metadata": {
+        "id": "89e6NQqVcClw"
+      },
+      "execution_count": 18,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#Bio\n",
+        "with open('professor_bios.txt', 'w', encoding='utf-8') as file:\n",
+        "  for bio in final_bio:\n",
+        "    file.write(f\"{bio}\\n\\n\")\n",
+        "print(\"Bios written.\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "iPRttqE4fK1c",
+        "outputId": "00b58668-a122-4578-e9ad-5e4a00aadf3c"
+      },
+      "execution_count": 19,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Bios written.\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
+ 377 changes: 377 additions & 0 deletions377  
+professor_bios.txt
+Large diffs are not rendered by default.
+
+ 157 changes: 157 additions & 0 deletions157  
+professor_names.txt
+@@ -0,0 +1,157 @@
+Name: Daniel Abadi
+Name: Ashok Agrawala
+Name: Fardina Alam
+Name: John Aloimonos
+Name: Bahar Asgari
+Name: Clifford Bakalian
+Name: Abhinav Bhatele
+Name: Bobby Bhattacharjee
+Name: Jordan Boyd-Graber
+Name: Jose Calderon
+Name: Marine Carpuat
+Name: Yizheng Chen
+Name: Andrew Childs
+Name: Rance Cleaveland
+Name: Hal Daumé III
+Name: Amol Deshpande
+Name: Laxman Dhulipala
+Name: John Dickerson
+Name: Ramani Duraiswami
+Name: Roger Eastman
+Name: Howard Elman
